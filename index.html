@@ -19,7 +19,7 @@
     h2 { font-size: 19px; margin-top: 36px; color: #4f46e5; }
     .updated { color: #6b7280; font-size: 14px; }
     table { border-collapse: collapse; width: 100%; margin: 12px 0; }
-    th, td { border: 1px solid #e5e7eb; padding: 8px 12px; text-align: left; }
+    th, td { border: 1px solid #e5e7eb; padding: 8px 12px; text-align: left; vertical-align: top; }
     th { background: #f9fafb; }
     code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 90%; }
     .unofficial-notice {
@@ -32,41 +32,92 @@
       font-weight: 600;
       line-height: 1.6;
     }
+    .summary {
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      border-radius: 8px;
+      padding: 14px 18px 6px;
+      margin: 20px 0 28px;
+    }
+    .summary strong { color: #3730a3; }
     footer { margin-top: 48px; color: #6b7280; font-size: 14px; }
   </style>
 </head>
 <body>
   <h1>개인정보 처리방침 — Dive Reserve Helper</h1>
-  <p class="updated">최종 업데이트: 2026-05-31</p>
+  <p class="updated">최종 업데이트: 2026-06-15</p>
 
   <p class="unofficial-notice">⚠️ 본 확장 프로그램은 딥스테이션(deepstation.kr)의 <u>공식 도구가 아닌 비공식(Unofficial) 도구</u>이며, 딥스테이션과 아무런 관련이 없습니다.</p>
 
-  <p>Dive Reserve Helper("본 확장 프로그램")는 딥스테이션(deepstation.kr) 프리다이빙 예약을 돕는 비공식 Chrome 확장 프로그램입니다.</p>
+  <p>Dive Reserve Helper("본 확장 프로그램")는 딥스테이션(deepstation.kr) 프리다이빙 예약을 돕는 비공식 Chrome 확장 프로그램입니다. 본 방침은 확장 프로그램이 어떤 정보를 어디에 보관하고 어떻게 사용하는지 설명합니다.</p>
 
-  <h2>수집하는 정보</h2>
-  <p>본 확장 프로그램은 <strong>어떠한 개인정보도 수집·저장·외부 전송하지 않습니다.</strong></p>
+  <div class="summary">
+    <p><strong>한눈에 보기</strong></p>
+    <ul>
+      <li>본 확장 프로그램은 <strong>별도의 서버를 운영하지 않으며</strong>, 사용자 정보를 수집·판매·광고·추적 목적으로 외부에 전송하지 않습니다.</li>
+      <li>다만 <strong>서약서 자동 채우기</strong> 기능을 위해 일부 정보(생년월일·성별·등급·병력이력·서명 등)를 <strong>사용자 기기(브라우저)에만</strong> 저장합니다.</li>
+      <li><strong>구글 캘린더 저장</strong> 기능은 사용자가 직접 버튼을 눌렀을 때, 해당 예약 정보를 구글 캘린더(제3자)로 전달합니다.</li>
+    </ul>
+  </div>
+
+  <h2>본 확장 프로그램이 다루는 정보</h2>
+  <table>
+    <tr><th>정보</th><th>저장 위치</th><th>보관 기간</th></tr>
+    <tr>
+      <td>예약 현황(부이·인원 잔여)</td>
+      <td>메모리(화면 표시용)</td>
+      <td>저장하지 않음(페이지를 벗어나면 소멸)</td>
+    </tr>
+    <tr>
+      <td>예약 내역 상세(이용시간·인원·부이·전자서명문서 링크 등)</td>
+      <td>브라우저 세션 저장소(<code>sessionStorage</code>)</td>
+      <td>탭/세션 종료 시 자동 삭제(반복 조회 속도 향상용 임시 캐시)</td>
+    </tr>
+    <tr>
+      <td>서약서 입력 정보(생년월일·성별·강사 등급·라이선스 등급·병력이력 및 상세·서명 이미지)</td>
+      <td>브라우저 로컬 저장소(<code>chrome.storage.local</code>)</td>
+      <td>사용자가 직접 삭제할 때까지 기기에 보관</td>
+    </tr>
+  </table>
+
+  <h2>로컬에 저장되는 정보 — 서약서 자동 채우기</h2>
+  <p>강사서약·이용규정서약 페이지에서 매번 반복 입력하는 항목을 다음 작성 시 자동으로 채워 넣기 위해, 사용자가 입력한 값을 <strong>사용자 브라우저 안(<code>chrome.storage.local</code>)에만</strong> 저장합니다.</p>
   <ul>
-    <li>사용자의 브라우저에 데이터를 저장하지 않습니다(로컬 스토리지/쿠키 생성 없음).</li>
-    <li>제3자 서버로 어떠한 데이터도 전송하지 않습니다.</li>
-    <li>분석(애널리틱스), 광고, 추적 도구를 사용하지 않습니다.</li>
+    <li>저장 대상은 한정된 항목으로 고정되어 있습니다: <strong>생년월일, 성별, 강사 등급, 라이선스 등급, 병력이력(및 상세), 서명 이미지</strong>(이 목록 밖의 필드는 저장하지 않습니다).</li>
+    <li>이 정보 중 <strong>생년월일·병력이력·서명</strong>은 민감할 수 있는 정보입니다. 해당 정보는 <strong>외부로 전송되지 않으며 사용자 기기에만</strong> 머뭅니다.</li>
+    <li>자동 채우기는 <strong>비어 있는 칸만</strong> 채우며, 이미 입력된 값은 덮어쓰지 않습니다.</li>
+    <li>여러 사람이 공용으로 쓰는 브라우저(가족·커플·공용 PC)에서는 저장된 정보가 다음 사용자의 서약서 화면에 자동으로 채워질 수 있으니 주의하세요. 공용 기기에서는 아래 "저장 정보 삭제 방법"을 참고해 정보를 지우는 것을 권장합니다.</li>
   </ul>
 
-  <h2>데이터 사용 방식</h2>
-  <p>본 확장 프로그램은 예약 현황을 표시하기 위해 사용자가 deepstation.kr에 로그인한 상태에서, 해당 사이트의 예약 조회 API(<code>deepstation.kr/rez/ajax.dayinfo.php</code>)로 <strong>인증된 요청(브라우저 쿠키 포함)</strong>을 보냅니다.</p>
+  <h2>데이터 전송 및 외부 통신</h2>
   <ul>
-    <li>이 요청은 사용자의 브라우저와 deepstation.kr 사이에서만 이루어집니다.</li>
-    <li>응답 데이터(부이/인원 잔여 현황)는 화면 표시 용도로만 메모리에서 사용되며, 저장되지 않습니다.</li>
-    <li>예약 폼 자동 채우기는 deepstation.kr 페이지 내 입력 필드에만 값을 채웁니다.</li>
+    <li><strong>딥스테이션(deepstation.kr)</strong>: 예약 현황·내역을 조회하기 위해, 사용자가 로그인한 상태에서 딥스테이션의 조회 API(<code>deepstation.kr/rez/ajax.dayinfo.php</code>) 및 예약 상세 페이지(<code>view.php</code>)로 <strong>인증된 요청(브라우저 쿠키 포함)</strong>을 보냅니다. 이 통신은 사용자의 브라우저와 deepstation.kr 사이에서만 이루어집니다.</li>
+    <li><strong>구글 캘린더(선택 기능)</strong>: 사용자가 예약 내역에서 날짜를 클릭하면, 해당 예약 정보(날짜·시간·인원·부이·예약번호·전자서명문서 링크)를 담은 구글 캘린더 "일정 추가" 링크를 새 탭으로 엽니다. 사용자가 구글 계정으로 일정을 저장하면 이 정보는 구글(제3자)에 전달됩니다. 이 기능은 <strong>사용자가 직접 클릭할 때만</strong> 동작합니다.</li>
+    <li>그 외 본 확장 프로그램은 제3자 서버로 데이터를 전송하지 않으며, 분석(애널리틱스)·광고·추적 도구를 사용하지 않습니다.</li>
+  </ul>
+
+  <h2>저장 정보 삭제 방법</h2>
+  <p>현재 확장 프로그램 내 전용 삭제 버튼은 제공되지 않습니다. 저장된 서약서 정보는 다음 방법으로 삭제할 수 있습니다.</p>
+  <ul>
+    <li>확장 프로그램을 제거하면 <code>chrome.storage.local</code>에 저장된 정보도 함께 삭제됩니다.</li>
+    <li>브라우저의 "인터넷 사용 기록 삭제 → 쿠키 및 기타 사이트 데이터"로 사이트 데이터를 삭제합니다.</li>
+    <li>세션 캐시(<code>sessionStorage</code>)는 탭 또는 브라우저를 닫으면 자동으로 사라집니다.</li>
   </ul>
 
   <h2>권한 사용 사유</h2>
   <table>
     <tr><th>권한</th><th>사유</th></tr>
-    <tr><td><code>host_permissions: https://deepstation.kr/*</code></td><td>예약 페이지에 현황 패널을 표시하고 예약 폼을 자동으로 채우기 위해 필요합니다.</td></tr>
+    <tr><td><code>storage</code></td><td>서약서 자동 채우기에 쓰는 반복 입력 정보를 사용자 기기에 저장하기 위해 필요합니다. 저장된 정보는 외부로 전송되지 않습니다.</td></tr>
+    <tr><td><code>host_permissions: https://deepstation.kr/*</code></td><td>예약 페이지에 현황 패널을 표시하고 예약 폼을 자동으로 채우며, 예약 현황·내역을 조회하기 위해 필요합니다.</td></tr>
   </table>
   <p>본 확장 프로그램은 deepstation.kr 외 다른 사이트에서는 동작하지 않습니다.</p>
 
+  <h2>방침 변경</h2>
+  <p>기능 추가·변경으로 데이터 처리 방식이 바뀌면 본 방침과 상단의 "최종 업데이트" 날짜를 갱신합니다.</p>
+
   <h2>문의</h2>
-  <p>문의 사항은 저장소 이슈를 통해 전달해 주세요.</p>
+  <p>문의 사항은 인스타그램(<a href="https://www.instagram.com/yeoriyeori/">@yeoriyeori</a>) 또는 저장소 이슈를 통해 전달해 주세요.</p>
+
+  <footer>Dive Reserve Helper — 비공식 도구 · 개인정보 처리방침</footer>
 </body>
 </html>
